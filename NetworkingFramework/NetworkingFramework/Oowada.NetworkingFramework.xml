@@ -1,0 +1,817 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Oowada.NetworkingFramework</name>
+    </assembly>
+    <members>
+        <member name="T:Oowada.NetworkingFramework.Client.ClientNetManager">
+            <summary>
+            客户端网络管理器
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Client.ClientNetManager.conn">
+            <summary>
+            本地客户端连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Client.ClientNetManager.CustomData">
+            <summary>
+            客户端的用户数据
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Client.ClientNetManager.IsConnecting">
+            <summary>
+            是否正在连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Client.ClientNetManager.IsConnected">
+            <summary>
+            是否已经连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Client.ClientNetManager.IsClosing">
+            <summary>
+            是否正在关闭连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Client.ClientNetManager.IsClosed">
+            <summary>
+            是否已关闭连接
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Client.ClientNetManager.Connect(System.String,System.Int32)">
+            <summary>
+            发起连接
+            </summary>
+            <param name="ip">要连接的IP地址</param>
+            <param name="port">端口号</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Client.ClientNetManager.Send(Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            发送消息
+            </summary>
+            <param name="message">要发送的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Client.ClientNetManager.Close">
+            <summary>
+            立即关闭连接
+            </summary>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.BaseMessage">
+            <summary>
+            消息基类，所有的消息都从该类派生
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseMessage.types">
+            <summary>
+            消息名和消息类型的映射字典
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.RegisterMessage``1">
+            <summary>
+            注册当前消息类
+            </summary>
+            <typeparam name="T">要注册的消息类，该类必须从BaseMessage派生</typeparam>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.UnregisterMessage``1">
+            <summary>
+            注销当前消息类
+            </summary>
+            <typeparam name="T">要注销的消息类，该类必须从BaseMessage派生</typeparam>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.GetMessageByteLength">
+            <summary>
+            获取该消息写入缓冲区需要占用的字节数
+            </summary>
+            <returns>该消息写入缓冲区需要占用的字节数</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.GetMessageByteLength(Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            获取消息写入缓冲区需要占用的字节数
+            </summary>
+            <param name="message">要写如的消息</param>
+            <returns>消息写入缓冲区需要占用的字节数</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.WriteToByteBuffer(Oowada.NetworkingFramework.Common.ByteBuffer)">
+            <summary>
+            将消息写入缓冲区，包括写入消息名长度、消息名、消息数据，并在开头加上整体消息的长度
+            </summary>
+            <param name="buff">要写入的缓冲区</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.WriteToByteBuffer(Oowada.NetworkingFramework.Common.ByteBuffer,Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            将消息写入缓冲区，包括写入消息名长度、消息名、消息数据，并在开头加上整体消息的长度
+            </summary>
+            <param name="buff">要写入的缓冲区</param>
+            <param name="message">要写入的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.ReadFromByteBuff(Oowada.NetworkingFramework.Common.ByteBuffer)">
+            <summary>
+            从缓冲区中读取消息
+            </summary>
+            <param name="buff">要读取的缓冲区</param>
+            <returns>缓冲区中读取出的消息对象，若读取失败返回null</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseMessage.ToString">
+            <summary>
+            转化为消息名加JSON字符串格式输出
+            </summary>
+            <returns>消息名加JSON字符串</returns>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.BaseNetManager">
+            <summary>
+            网络管理器基类
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.messageListeners">
+            <summary>
+            消息处理函数
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.netEventListeners">
+            <summary>
+            网络事件处理函数
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.netMessageEventListeners">
+            <summary>
+            网络消息事件处理函数
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.messageQueue">
+            <summary>
+            消息队列
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.BaseNetManager.MaxHandleMessageCount">
+            <summary>
+            一次处理消息的最大数量
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.beforeUpdateCallbacks">
+            <summary>
+            在Update之前调用的回调函数
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.updateCallbacks">
+            <summary>
+            Update中调用的回调函数
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.afterUpdateCallbacks">
+            <summary>
+            在Update之后调用的回调函数
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.BaseNetManager.CurTime">
+            <summary>
+            当前时间
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.stdOut">
+            <summary>
+            标准输出
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.BaseNetManager.curOut">
+            <summary>
+            当前输出流
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddMessageListener(System.Type,Oowada.NetworkingFramework.Common.MessageListener)">
+            <summary>
+            添加消息监听，建议使用泛型方法代替
+            </summary>
+            <param name="messageType">要监听的消息类型</param>
+            <param name="onMessage">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveMessageListener(System.Type,Oowada.NetworkingFramework.Common.MessageListener)">
+            <summary>
+            移除消息监听，建议使用泛型方法代替
+            </summary>
+            <param name="messageType">要移除监听器的消息类型</param>
+            <param name="onMessage">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.InvokeMessageListener(System.Type,Oowada.NetworkingFramework.Common.PendingMessage)">
+            <summary>
+            执行消息监听器，建议使用泛型方法代替
+            </summary>
+            <param name="messageType">消息类型</param>
+            <param name="pendingMessage">待处理的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddMessageListener``1(Oowada.NetworkingFramework.Common.MessageListener)">
+            <summary>
+            添加消息监听
+            </summary>
+            <typeparam name="T">要监听的消息类型，必须从BaseMessage派生</typeparam>
+            <param name="onMessage">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveMessageListener``1(Oowada.NetworkingFramework.Common.MessageListener)">
+            <summary>
+            移除消息监听
+            </summary>
+            <typeparam name="T">要移除监听器的消息类型，必须从BaseMessage派生</typeparam>
+            <param name="onMessage">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.InvokeMessageListener``1(Oowada.NetworkingFramework.Common.PendingMessage)">
+            <summary>
+            执行消息监听器
+            </summary>
+            <typeparam name="T">消息类型，必须从BaseMessage派生</typeparam>
+            <param name="pendingMessage">待处理的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddNetEventListener(Oowada.NetworkingFramework.Common.NetEvent,Oowada.NetworkingFramework.Common.NetEventListener)">
+            <summary>
+            添加网络事件监听
+            </summary>
+            <param name="e">要监听的网络事件</param>
+            <param name="onEvent">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveNetEventListener(Oowada.NetworkingFramework.Common.NetEvent,Oowada.NetworkingFramework.Common.NetEventListener)">
+            <summary>
+            移除网络事件监听
+            </summary>
+            <param name="e">要移除监听器的网络事件</param>
+            <param name="onEvent">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.InvokeNetEventListener(Oowada.NetworkingFramework.Common.NetEvent,System.Net.Sockets.Socket)">
+            <summary>
+            执行网络事件监听器
+            </summary>
+            <param name="e">要执行监听器的网络事件</param>
+            <param name="socket">引发网络事件的Socket对象</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddNetMessageEventListener(Oowada.NetworkingFramework.Common.NetMessageEvent,Oowada.NetworkingFramework.Common.NetMessageEventListener)">
+            <summary>
+            添加网络消息事件监听
+            </summary>
+            <param name="e">要监听的网络消息事件</param>
+            <param name="onEvent">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveNetMessageEventListener(Oowada.NetworkingFramework.Common.NetMessageEvent,Oowada.NetworkingFramework.Common.NetMessageEventListener)">
+            <summary>
+            移除网络消息事件监听
+            </summary>
+            <param name="e">要移除监听器的网络消息事件</param>
+            <param name="onEvent">监听器</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.InvokeNetMessageEventListener(Oowada.NetworkingFramework.Common.NetMessageEvent,Oowada.NetworkingFramework.Common.PendingMessage)">
+            <summary>
+            执行网络消息事件监听器
+            </summary>
+            <param name="e">要执行监听器的网络消息事件</param>
+            <param name="pendingMessage">引发网络消息事件的待处理消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddBeforeUpdateCallback(System.Action)">
+            <summary>
+            添加要在Update之前执行的回调方法
+            </summary>
+            <param name="callback">要在Update之前执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveBeforeUpdateCallback(System.Action)">
+            <summary>
+            移除要在Update之前执行的回调方法
+            </summary>
+            <param name="callback">要移除的在Update之前执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddUpdateCallback(System.Action)">
+            <summary>
+            添加要在Update中执行的回调方法
+            </summary>
+            <param name="callback">要在Update中执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveUpdateCallback(System.Action)">
+            <summary>
+            移除要在Update中执行的回调方法
+            </summary>
+            <param name="callback">要移除的在Update中执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AddAfterUpdateCallback(System.Action)">
+            <summary>
+            添加要在Update之后执行的回调方法
+            </summary>
+            <param name="callback">要在Update之后执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RemoveAfterUpdateCallback(System.Action)">
+            <summary>
+            移除要在Update之后执行的回调方法
+            </summary>
+            <param name="callback">要移除的在Update之后执行的回调方法</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.HandleMessage">
+            <summary>
+            处理消息队列中的第一条消息
+            </summary>
+            <returns>是否处理了消息，若未处理任何消息则返回false</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.HandleMessages">
+            <summary>
+            处理消息队列中的多条消息
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.BeforeUpdate">
+            <summary>
+            在Update之前执行
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.Update">
+            <summary>
+            <para>此方法需要放在一段能够循环执行的代码中，此方法将会不断处理消息队列里的消息，可以通过设置MaxHandleMessageCount来改变一次处理的最大消息数</para>
+            <para>执行顺序为BeforeUpdate -> HandleMessages -> Update -> AfterUpdate</para>
+            <para>可以通过AddBeforeUpdateCallback和RemoveBeforeUpdateCallback自行添加和移除要在此方法之前BeforeUpdate重复调用执行的方法</para>
+            <para>可以通过AddUpdateCallback和RemoveUpdateCallback自行添加和移除要在此方法Update中重复调用执行的方法</para>
+            <para>可以通过AddAfterUpdateCallback和RemoveAfterUpdateCallback自行添加和移除要在此方法之后AfterUpdate重复调用执行的方法</para>
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.AfterUpdate">
+            <summary>
+            在Update之后执行
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.Send(Oowada.NetworkingFramework.Common.ClientConnection,Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            发送消息
+            </summary>
+            <param name="conn">要发送给的客户端连接</param>
+            <param name="message">要发送的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.BeginReceive(Oowada.NetworkingFramework.Common.ClientConnection)">
+            <summary>
+            开始接收客户端数据
+            </summary>
+            <param name="conn">客户端</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.ReceiveMessage(Oowada.NetworkingFramework.Common.PendingMessage)">
+            <summary>
+            接收消息
+            </summary>
+            <param name="pendingMessage">待处理消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.Close(Oowada.NetworkingFramework.Common.ClientConnection)">
+            <summary>
+            立即关闭连接
+            </summary>
+            <param name="client">要关闭的客户端连接</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.SetLogOutput(System.String)">
+            <summary>
+            设置日志文件的输出位置
+            </summary>
+            <param name="logFile">日志文件的输出位置</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.ResetLogOutput">
+            <summary>
+            重置日志文件的输出位置到标准输出
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.Log(System.String)">
+            <summary>
+            输出日志，可以通过SetLogOutput和ResetLogOutput设置和重置日志的输出位置
+            </summary>
+            <param name="log">日志内容</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.CurrentSourceCodeInfo">
+            <summary>
+            获取当前代码信息，包括文件名，方法名，行号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.RegisterMessage``1">
+            <summary>
+            注册当前消息类
+            </summary>
+            <typeparam name="T">要注册的消息类，该类必须从BaseMessage派生</typeparam>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.BaseNetManager.UnregisterMessage``1">
+            <summary>
+            注销当前消息类
+            </summary>
+            <typeparam name="T">要注销的消息类，该类必须从BaseMessage派生</typeparam>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.ByteBuffer">
+            <summary>
+            缓冲区
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.Buff">
+            <summary>
+            缓冲区数据数组
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.ReadIndex">
+            <summary>
+            读索引
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.WriteIndex">
+            <summary>
+            写索引
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.Capacity">
+            <summary>
+            缓冲区总容量
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.RemainCapacity">
+            <summary>
+            缓冲区剩余容量
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.DataSize">
+            <summary>
+            实际存储的数据的大小
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.AutoMoveExpendLimits">
+            <summary>
+            自动检查时，当剩余容量小于数组总容量Capacity的该倍率时，会尝试移动或扩容
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.AutoReduceLimits">
+            <summary>
+            自动检查时，当数据容量小于数组总容量Capacity的该倍率一定次数时，会尝试缩容，可以通过设置AutoReduceLimitsCount改变次数
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.AutoReduceLimitsCount">
+            <summary>
+            自动检查时，当数据容量小于数组总容量Capacity的一定倍率该次数时，会尝试缩容，可以通过设置AutoReduceLimits改变倍率
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ByteBuffer.CurrentAutoReduceLimitsCount">
+            <summary>
+            自动检查时，判定符合缩容条件的实际次数，可以通过设置AutoReduceLimits和AutoReduceLimitsCount修改条件
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.#ctor(System.Int32)">
+            <summary>
+            构建一个缓冲区
+            </summary>
+            <param name="size">缓冲区初始大小</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.MoveWriteIndex(System.Int32)">
+            <summary>
+            移动写索引，异步操作数据时需要自己根据情况修改写索引
+            </summary>
+            <param name="offset">偏移量</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.MoveReadIndex(System.Int32)">
+            <summary>
+            移动读索引，异步操作数据时需要自己根据情况修改读索引
+            </summary>
+            <param name="offset">偏移量</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.Resize(System.Int32)">
+            <summary>
+            重新设置大小
+            </summary>
+            <param name="size">要设置的大小</param>
+            <returns>如果传入的大小比实际数据大小DataSize小则返回false；否则返回true</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.ExpandCapacity(System.Int32)">
+            <summary>
+            扩展容量，将容量扩充至原先的scale倍
+            </summary>
+            <param name="scale">扩充倍数</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.TryMoveBytes">
+            <summary>
+            尝试移动数组中的数据到数组开头，只有当数组中前面一半的空间都是空的，并且剩余容量较少时，尝试移动数据到数组开头才会成功
+            </summary>
+            <returns>是否移动了数组</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.AutoCheckCapacity">
+            <summary>
+            自动检查容量，若发现容量即将不足，会尝试移动或扩容；若发现剩余容量一直太多，会尝试缩容
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.ReadUInt16">
+            <summary>
+            以大端模式读取一个16位无符号整数
+            </summary>
+            <returns>16位无符号整数，如果不能读取返回0</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.WriteUInt16(System.UInt16)">
+            <summary>
+            以大端模式写入一个16位无符号整数
+            </summary>
+            <param name="num">16位无符号整数</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.ReadData(System.Int32)">
+            <summary>
+            读取数据
+            </summary>
+            <param name="size">要读取的数据大小，若超过数据实际大小则只会读取实际大小的数据</param>
+            <returns>读取的数据，若没有数据会返回长度为0的数组</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ByteBuffer.WriteData(System.Byte[])">
+            <summary>
+            写入数据，如果数据超出缓冲区总容量，会扩容到足够装下所有数据，可以通过设置CapacityLackResizeRate调整扩容的比率
+            </summary>
+            <param name="data">要写入的数据</param>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.ClientConnection">
+            <summary>
+            客户端连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.ConnSocket">
+            <summary>
+            客户端连接套接字
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.Identifier">
+            <summary>
+            由IP地址和端口号组成的标识符，若未连接则为默认值，可通过DefaultIdentifier来设置默认值
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.DefaultIdentifier">
+            <summary>
+            默认的标识符Identifier
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.ReadBuff">
+            <summary>
+            读缓冲区
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.IsConnecting">
+            <summary>
+            是否正在连接中
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.IsClosing">
+            <summary>
+            是否正在关闭连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.IsClosed">
+            <summary>
+            是否已关闭连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.CanConnect">
+            <summary>
+            是否能够连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.CanSendOrReceive">
+            <summary>
+            是否能够收发消息
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.CanSendRest">
+            <summary>
+            是否能够发送剩下的数据
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.CanClose">
+            <summary>
+            是否能够关闭连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.WriteQueue">
+            <summary>
+            写队列
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.ClientConnection.CustomData">
+            <summary>
+            用户数据，用于自行存储需要的数据
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ClientConnection.#ctor">
+            <summary>
+            创建一个客户端连接，空套接字，需要先给连接套接字ConnSocket赋值才能正常使用
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ClientConnection.#ctor(System.Net.Sockets.Socket)">
+            <summary>
+            创建一个客户端连接
+            </summary>
+            <param name="socket">客户端的连接套接字</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ClientConnection.SetIdentifier">
+            <summary>
+            设置标识符，值为远程连接对象的IP地址和端口号
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.ClientConnection.Close">
+            <summary>
+            立即关闭连接
+            </summary>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.MessageListener">
+            <summary>
+            消息监听器
+            </summary>
+            <param name="pendingMessage">待处理的消息</param>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.NetEventListener">
+            <summary>
+            <para>网络事件监听器</para>
+            <para>对于不同的事件传入的参数会有所不同</para>
+            <para>NetEvent.OnConnecting - 连接套接字，此时未连接（只有客户端会调用）</para>
+            <para>NetEvent.OnConnectSuccess - 连接套接字（只有客户端会调用）</para>
+            <para>NetEvent.OnConnectFail - 连接套接字，此时未连接（只有客户端会调用）</para>
+            <para>NetEvent.OnDisconnecting - 客户端连接套接字，只有主动关闭方才会调用</para>
+            <para>NetEvent.OnDisconnected - 客户端连接套接字，此时未连接</para>
+            <para>NetEvent.OnAccepting - 监听套接字（只有服务器会调用）</para>
+            <para>NetEvent.OnAcceptSuccess - 成功接收到的客户端连接套接字（只有服务器会调用）</para>
+            <para>NetEvent.OnAcceptFail - 监听套接字（只有服务器会调用）</para>
+            </summary>
+            <param name="socket">发生网络事件的Socket对象</param>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.NetMessageEventListener">
+            <summary>
+            <para>网络消息事件监听器</para>
+            <para>对于不同的事件传入的参数的Message值会有所不同，Client值均为收发消息的客户端连接</para>
+            <para>NetMessageEvent.OnSending - 将要发送的消息</para>
+            <para>NetMessageEvent.OnSendSuccess - 成功发送的消息</para>
+            <para>NetMessageEvent.OnSendFail - 发送失败的消息</para>
+            <para>NetMessageEvent.OnReceiving - null</para>
+            <para>NetMessageEvent.OnReceiveSuccess - 接收到的消息</para>
+            <para>NetMessageEvent.OnReceiveFail - null</para>
+            </summary>
+            <param name="pendingMessage">引发网络消息事件的待处理消息</param>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.NetEvent">
+            <summary>
+            网络事件
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnConnecting">
+            <summary>
+            正在连接
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnConnectSuccess">
+            <summary>
+            连接成功
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnConnectFail">
+            <summary>
+            连接失败
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnDisconnecting">
+            <summary>
+            正在断开连接
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnDisconnected">
+            <summary>
+            已断开连接
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnAccepting">
+            <summary>
+            正在接收
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnAcceptSuccess">
+            <summary>
+            接收成功
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetEvent.OnAcceptFail">
+            <summary>
+            接收失败
+            </summary>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.NetMessageEvent">
+            <summary>
+            网络消息事件
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnSending">
+            <summary>
+            正在发送
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnSendSuccess">
+            <summary>
+            发送成功
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnSendFail">
+            <summary>
+            发送失败
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnReceiving">
+            <summary>
+            正在接收
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnReceiveSuccess">
+            <summary>
+            接收成功
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Common.NetMessageEvent.OnReceiveFail">
+            <summary>
+            接收失败
+            </summary>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Common.PendingMessage">
+            <summary>
+            待处理的消息
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.PendingMessage.Client">
+            <summary>
+            收发消息的客户端
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Common.PendingMessage.Message">
+            <summary>
+            收发的消息
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Common.PendingMessage.#ctor(Oowada.NetworkingFramework.Common.ClientConnection,Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            构建一个待处理的消息
+            </summary>
+            <param name="client">收发消息的客户端</param>
+            <param name="message">收发的消息</param>
+        </member>
+        <member name="T:Oowada.NetworkingFramework.Server.ServerNetManager">
+            <summary>
+            服务器网络控制器
+            </summary>
+        </member>
+        <member name="F:Oowada.NetworkingFramework.Server.ServerNetManager.listening">
+            <summary>
+            监听套接字
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Server.ServerNetManager.Clients">
+            <summary>
+            客户端连接
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Server.ServerNetManager.IsRunning">
+            <summary>
+            服务器是否正在运行
+            </summary>
+        </member>
+        <member name="P:Oowada.NetworkingFramework.Server.ServerNetManager.CheckCloseIntervalMacroSeconds">
+            <summary>
+            关闭服务器时，检查是否所有客户端均已成功断开连接的微秒时间间隔
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.RemoveClientConnection(System.Net.Sockets.Socket)">
+            <summary>
+            从当前客户端中移除指定的客户端
+            </summary>
+            <param name="socket">要移除的客户端套接字</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.GetCustomData(Oowada.NetworkingFramework.Common.ClientConnection)">
+            <summary>
+            获取指定客户端的用户数据
+            </summary>
+            <param name="client">指定的客户端</param>
+            <returns>指定客户端的用户数据，未找到则返回null</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.GetCustomData(System.Net.Sockets.Socket)">
+            <summary>
+            获取指定客户端套接字的用户数据
+            </summary>
+            <param name="clientSocket">指定客户端套接字</param>
+            <returns>指定客户端套接字的用户数据，未找到则返回null</returns>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.StartServer(System.String,System.Int32)">
+            <summary>
+            开启服务器
+            </summary>
+            <param name="ip">要监听的IP地址</param>
+            <param name="port">要监听的端口号</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.CloseClientConnection(Oowada.NetworkingFramework.Common.ClientConnection)">
+            <summary>
+            立即关闭客户端连接
+            </summary>
+            <param name="client">要关闭的客户端</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.CloseServer">
+            <summary>
+            立即关闭服务器，会先立即关闭所有客户端连接
+            </summary>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.Send(Oowada.NetworkingFramework.Common.ClientConnection,Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            向客户端发送消息
+            </summary>
+            <param name="client">要发送给的客户端</param>
+            <param name="message">要发送的消息</param>
+        </member>
+        <member name="M:Oowada.NetworkingFramework.Server.ServerNetManager.Broadcast(Oowada.NetworkingFramework.Common.BaseMessage)">
+            <summary>
+            向所有客户端广播消息
+            </summary>
+            <param name="message">要广播的消息</param>
+        </member>
+    </members>
+</doc>

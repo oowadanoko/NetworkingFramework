@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+    <RootNamespace>Oowada.NetworkingFramework</RootNamespace>
+    <AssemblyName>Oowada.NetworkingFramework</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile>D:\Projects\vs\C#\NetworkingFramework\NetworkingFramework\Oowada.NetworkingFramework.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Projects\vs\C#\NetworkingFramework\NetworkingFramework\Oowada.NetworkingFramework.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
